@@ -13,14 +13,18 @@ st.set_page_config(layout="wide")
 # Enlace de descarga directa 
 url_excel = "https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/ESsbWoRrT2pOq7G6DlLrtAgB7gRvw3J5komJxW7VzbM_vg?download=1"
 url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
+url_excel_listado = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EW47uW_fJFtInsbP1zH_30gBdsFrR5Asr0ouwkvcoqEmXA?download=1'
 
-
-# Carga de datos
-estudiantes = pd.read_excel('C:/Users/Admin/Desktop/GK/PS.xlsx', sheet_name='g')
-estudiantes['GRADO'] = estudiantes['GRADO'].astype(str)
-estudiantes['ESTUDIANTE'] = estudiantes['ESTUDIANTE'].apply(corregir_nombre)
 
 ingles = ['Inglés - listening','Inglés - speaking','Inglés - writing', 'Inglés - reading', 'Animaplanos']
+
+def cargar_listado():
+    response = requests.get(url_excel_listado)
+    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
+    df = pd.read_excel(BytesIO(response.content), sheet_name='g')
+    df['GRADO'] = df['GRADO'].astype(str)
+    df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
+    return df
 
 
 def cargar_planeacion():
@@ -42,6 +46,7 @@ def cargar_notas():
 
 notas = cargar_notas()
 planeacion_primaria = cargar_planeacion()
+estudiantes = cargar_listado
 
 notas['GRADO'] = notas['GRADO'].astype(str)
 notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
