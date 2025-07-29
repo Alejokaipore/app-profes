@@ -46,7 +46,7 @@ def cargar_notas():
 
 notas = cargar_notas()
 planeacion_primaria = cargar_planeacion()
-estudiantes = cargar_listado
+estudiantes = cargar_listado()
 
 notas['GRADO'] = notas['GRADO'].astype(str)
 notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
