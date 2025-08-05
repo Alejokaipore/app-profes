@@ -24,6 +24,7 @@ def cargar_listado():
     df = pd.read_excel(BytesIO(response.content), sheet_name='g')
     df['GRADO'] = df['GRADO'].astype(str)
     df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
+    df = df[df['GRADO'].isin(['1','2','3','4','5'])]
     return df
 
 
@@ -570,3 +571,4 @@ with col2:
 
     st.subheader("Notas")
     st.write(F5_2)
+
