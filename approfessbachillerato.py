@@ -848,7 +848,7 @@ with col2:
                 F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
             notas_año = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado)]
 
-        if grado in ['11'] and area_seleccionada in ['C1', 'C2']:
+        if grado in ['11'] and area_seleccionada in ['S1', 'S2']:
             F5_2 = pd.DataFrame(np.full((len(sociales_11), 20), "", dtype=str), index=sociales_11, columns= columnas_personalizadas)
             largo = {}
             for asignatura,_ in F5_2.iterrows():
@@ -886,3 +886,4 @@ with col2:
 
     st.subheader("Notas")
     st.write(F5_2)
+
