@@ -16,7 +16,7 @@ url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuel
 url_excel_listado = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EW47uW_fJFtInsbP1zH_30gBdsFrR5Asr0ouwkvcoqEmXA?download=1'
 
 
-ingles = ['Inglés - listening','Inglés - speaking','Inglés - writing', 'Inglés - reading', 'Animaplanos']
+ingles = ['Inglés - listening','Inglés - speaking','Inglés - writing', 'Inglés - reading']
 
 def cargar_listado():
     response = requests.get(url_excel_listado)
@@ -141,12 +141,12 @@ with col1:
                     continue
                     
                 bloques = ['A', 'B', 'C', 'D'] #define los bloques que se pueden encontrar en la base de datos
-                asignaturas = ['Aritmética', 'Estadística', 'Geometría','Dibujo técnico', 'Sistemas'] #define las asignaturas de Matematicas
+                asignaturas = ['Aritmética', 'Estadística', 'Geometría','Dibujo técnico', 'Sistemas','Animaplanos'] #define las asignaturas de Matematicas
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
                     notas_bloque_matematicas = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
-                    if (len(notas_bloque_completo) < 75) and (len(notas_bloque_matematicas) == 25):
+                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_matematicas) == 30):
                         desempeno_encontrado = True
                         break
 
@@ -571,4 +571,5 @@ with col2:
 
     st.subheader("Notas")
     st.write(F5_2)
+
 
