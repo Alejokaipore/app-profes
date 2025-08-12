@@ -208,10 +208,10 @@ with col1:
                     notas_bloque = notas_estudiante[notas_estudiante.iloc[:, 6] == bloque] # al filtro de las nostas del estudiante actual y su grado actual adicional se le aplica el filtro del bloque
                     notas_bloque_filtradas = notas_bloque[notas_bloque.iloc[:, 5].isin(asignaturas)] # al filtro anterior le asigna el filtro unicamente de las asignaturas del area de matematicas
                     longitud_bloque = len(notas_bloque_filtradas) # mira cuantos desempeños hay con todos los filtros aplicados
-                    if longitud_bloque == 25 and not desempeno_encontrado: # sin son 25 desempeños, tiene el bloque completo, no ejecuta el resto del codigo y se devuelve para iteral al siguiente bloque (Pasobloque), si no son 25 simplemente sigue el resto del codigo y aqui no hace nada
+                    if longitud_bloque == 30 and not desempeno_encontrado: # sin son 30 desempeños, tiene el bloque completo, no ejecuta el resto del codigo y se devuelve para iteral al siguiente bloque (Pasobloque), si no son 30 simplemente sigue el resto del codigo y aqui no hace nada
                         continue 
             
-                    if longitud_bloque < 25 and not desempeno_encontrado: # si son menos de 25 desempeños realiza lo que hay dentro de esta aprte del codigo
+                    if longitud_bloque < 30 and not desempeno_encontrado: # si son menos de 25 desempeños realiza lo que hay dentro de esta aprte del codigo
                         for materia in asignaturas: # itera sobre las asignaturas del area de matematicas
                                 if materia not in notas_bloque_filtradas.iloc[:, 5].values: #si el nombre de la materia actual (empieza por aritmetica) no esta en en la base con todos los filtros aplicados entonces le asigna el bloque y la materia sobre la cual le aplico el filtro y sigue con el siguiente estudiante en la lista.
                                     df_bloque.iloc[i] = bloque
@@ -243,7 +243,7 @@ with col1:
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
                     notas_bloque_sociales = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
-                    if (len(notas_bloque_completo) < 75) and (len(notas_bloque_sociales) == 15):
+                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_sociales) == 15):
                         desempeno_encontrado = True
                         break
 
@@ -329,7 +329,7 @@ with col1:
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
                     notas_bloque_lenguaje = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
-                    if (len(notas_bloque_completo) < 75) and (len(notas_bloque_lenguaje) == 15):
+                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_lenguaje) == 15):
                         desempeno_encontrado = True
                         break
 
@@ -414,7 +414,7 @@ with col1:
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
                     notas_bloque_ciencias = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
-                    if (len(notas_bloque_completo) < 75) and (len(notas_bloque_ciencias) == 20):
+                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_ciencias) == 20):
                         desempeno_encontrado = True
                         break
 
@@ -571,5 +571,6 @@ with col2:
 
     st.subheader("Notas")
     st.write(F5_2)
+
 
 
