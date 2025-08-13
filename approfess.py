@@ -628,6 +628,402 @@ with col1:
                         insertar[4] = excepcion
                         df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
 
+
+        if area_seleccionada == 'C':
+            adicionar = ['LIC-C']
+            for excepcion in adicionar:
+                # Buscar en qué columnas aparece exactamente el valor de la variable 'excepcion'
+                mask = planeacion_primaria.apply(lambda col: col == excepcion)
+                columnas_con_valor = mask.any(axis=0)
+                #poner en una lista las columnas que tienen el valor de excepcion
+                columnas_resultado = columnas_con_valor[columnas_con_valor].index.tolist()
+                #para cada columna en la que aprecio la excepcion hacer el filtrado y poner la lista de estudiantes
+                for columna in columnas_resultado:
+                    if columna == 'L':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'L.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+
+        if area_seleccionada == 'S':
+            adicionar = ['LIC-S','KAIPOMUN']
+            for excepcion in adicionar:
+                # Buscar en qué columnas aparece exactamente el valor de la variable 'excepcion'
+                mask = planeacion_primaria.apply(lambda col: col == excepcion)
+                columnas_con_valor = mask.any(axis=0)
+                #poner en una lista las columnas que tienen el valor de excepcion
+                columnas_resultado = columnas_con_valor[columnas_con_valor].index.tolist()
+                #para cada columna en la que aprecio la excepcion hacer el filtrado y poner la lista de estudiantes
+                for columna in columnas_resultado:
+                    if columna == 'L':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'L.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+
+        if area_seleccionada == 'L':
+            adicionar = ['LIC-L']
+            for excepcion in adicionar:
+                # Buscar en qué columnas aparece exactamente el valor de la variable 'excepcion'
+                mask = planeacion_primaria.apply(lambda col: col == excepcion)
+                columnas_con_valor = mask.any(axis=0)
+                #poner en una lista las columnas que tienen el valor de excepcion
+                columnas_resultado = columnas_con_valor[columnas_con_valor].index.tolist()
+                #para cada columna en la que aprecio la excepcion hacer el filtrado y poner la lista de estudiantes
+                for columna in columnas_resultado:
+                    if columna == 'L':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'L.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "LMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'M.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "MMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'W.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "WMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'J.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "JMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD1"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+                    if columna == 'V.1':
+                        lista_del_modulo = planeacion_primaria[planeacion_primaria[f'{columna}']== excepcion]
+                        primera_columna = lista_del_modulo.iloc[:, 0].tolist()
+                        #buscar donde aparece LMOD1
+                        idx = df_horario.index[df_horario.iloc[:, 0] == "VMOD2"][0]
+                        parte_1 = df_horario.iloc[:idx+1]
+                        parte_2 = df_horario.iloc[idx+1:]
+                        #Crear data frame vacio para insertar
+                        insertar = pd.DataFrame('', index=range(len(primera_columna)), columns=range(10))
+                        insertar[0] = primera_columna 
+                        insertar[4] = excepcion
+                        df_horario = pd.concat ([parte_1, insertar, parte_2], ignore_index = True)
+
+        
+
         st.subheader("F1")
         st.write(df_horario)
         
@@ -703,6 +1099,7 @@ with col2:
 
     st.subheader("Notas")
     st.write(F5_2)
+
 
 
 
