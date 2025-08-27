@@ -1100,6 +1100,21 @@ with col2:
     st.subheader("Notas")
     st.write(F5_2)
 
+    # Lista de materias
+    materias = ["Matemáticas", "Español", "Inglés", "Ciencias", "Historia"]
+
+    # Lista de periodos
+    periodos = ["Periodo 1", "Periodo 2", "Periodo 3", "Periodo 4"]
+
+    # Selectbox para materia
+    materia_seleccionada = st.selectbox("Selecciona una materia:", materias)
+
+    # Selectbox para periodo
+    periodo_seleccionado = st.selectbox("Selecciona un periodo:", periodos)
+
+    st.write(f"Materia seleccionada: {materia_seleccionada}")
+    st.write(f"Periodo seleccionado: {periodo_seleccionado}")
+
 
 
 
