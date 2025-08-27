@@ -8,6 +8,8 @@ import warnings
 import matplotlib.pyplot as plt # type: ignore
 from datetime import datetime
 import pytz
+import mysql.connector
+from db_utils import get_connection 
 
 st.set_page_config(layout="wide")
 
@@ -64,6 +66,18 @@ ciencias_1_5    = ['Biología','Química','Medio ambiente','Física']
 sociales_1_5    = ['Historia', 'Geografía', 'Participación política']
 lenguaje_1_5    = ['Comunicación y sistemas simbólicos','Producción e interpretación de textos','Pensamiento religioso']
 matematicas_1_5 = ['Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas']
+
+
+# Conectar a la base
+conn = get_connection()
+cursor = conn.cursor()
+
+# Consulta para traer todos los nombres de estudiantes
+cursor.execute("SELECT estudiante FROM estudiantes ORDER BY estudiante")
+estudiantes = [row[0] for row in cursor.fetchall()]
+
+cursor.close()
+conn.close()
 
 
 col1, col2 = st.columns(2)
@@ -1101,7 +1115,7 @@ with col2:
     st.subheader("Notas")
     st.write(F5_2)
 
-    # Lista de materias
+    # Lista de areas
     materias = ["Matemáticas", "Español", "Inglés", "Ciencias", "Historia"]
 
     # Lista de periodos
@@ -1117,7 +1131,32 @@ with col2:
     bogota = pytz.timezone("America/Bogota")
     fecha_actual = datetime.now(bogota).date()  # solo día, mes, año
 
-    st.write(f"Fecha del registro:{fecha_actual}")
+    st.write(f"Fecha del registro: {fecha_actual}")
+
+    # --- Lista de estudiantes y grado desde la base ---
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT estudiante, grado FROM estudiantes ORDER BY estudiante")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    # Diccionario {estudiante: grado}
+    estudiantes_dict = {row[0]: row[1] for row in data}
+
+    # Lista de estudiantes para selectbox
+    estudiante_seleccionado = st.selectbox("", list(estudiantes_dict.keys()))
+
+    # Grado automático según estudiante
+    grado = estudiantes_dict[estudiante_seleccionado]
+    st.write(f"Grado del estudiante: {grado}")
+
+    # --- Otros campos ---
+    bloque = st.text_input("Bloque")
+    etapa = st.text_input("Etapa")
+    calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
+
+
 
 
 
