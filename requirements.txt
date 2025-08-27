@@ -6,3 +6,4 @@ requests
 unidecode
 openpyxl
 pytz
+mysql-connector-python
