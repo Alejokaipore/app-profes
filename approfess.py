@@ -1042,40 +1042,6 @@ with col1:
         st.subheader("F1")
         st.write(df_horario)
 
-    # Diccionario de tablas según área
-    tablas_por_area = {
-        "Sociales": "primaria_s",
-        "Matemáticas": "primaria_m",
-        "Lenguaje": "primaria_l",
-        "Ciencias": "primaria_c",
-        "Inglés": "primaria_e"  # si existe
-    }
-
-    # Área seleccionada (ya la tienes de tu selectbox inicial)
-    area_seleccionada = st.selectbox("Selecciona un área para ver la tabla:", list(tablas_por_area.keys()))
-
-    tabla = tablas_por_area.get(area_seleccionada)
-
-    if tabla:
-        try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            query = f"SELECT * FROM {tabla} ORDER BY fecha DESC"
-            cursor.execute(query)
-            data = cursor.fetchall()
-            cols = [desc[0] for desc in cursor.description]  # nombres de columnas
-            cursor.close()
-            conn.close()
-
-            # Mostrar la tabla en Streamlit
-            df = pd.DataFrame(data, columns=cols)
-            st.write(f"Tabla: {tabla}")
-            st.dataframe(df)
-        except Exception as e:
-            st.error(f"Ocurrió un error al cargar la tabla: {e}")
-    else:
-        st.warning("Área no válida seleccionada")
-
 
 with col2:
     # Barra de búsqueda con autocompletado
