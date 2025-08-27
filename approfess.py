@@ -7,6 +7,7 @@ import requests
 from io import BytesIO
 import warnings
 import matplotlib.pyplot as plt # type: ignore
+from datetime import date
 
 st.set_page_config(layout="wide")
 
@@ -1112,8 +1113,10 @@ with col2:
     # Selectbox para periodo
     periodo_seleccionado = st.selectbox("Selecciona un periodo:", periodos)
 
-    st.write(f"Materia seleccionada: {materia_seleccionada}")
-    st.write(f"Periodo seleccionado: {periodo_seleccionado}")
+    # Obtener fecha actual
+    fecha_actual = date.today() 
+    st.write(f"Fecha del registro: {fecha_actual}")
+
 
 
 
