@@ -1121,7 +1121,7 @@ with col2:
     materias = ["Matemáticas", "Lenguaje", "Inglés", "Ciencias", "Sociales"]
 
     # Lista de periodos
-    periodos = ["Periodo 1", "Periodo 2", "Periodo 3", "Periodo 4"]
+    periodos = ["1", "2", "3", "4"]
 
     # Selectbox para materia
     materia_seleccionada = st.selectbox("Selecciona una materia:", materias)
@@ -1182,5 +1182,37 @@ with col2:
         }
 
         docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
-        st.write(f"Docente asignado: {docente}")
+        st.write(f"Docente : {docente}")
+
+        # --- Botón de submit ---
+        submitted = st.form_submit_button("Guardar")
+
+        if submitted:
+            if asignatura is None or tabla is None:
+                st.warning("Selecciona un área válida primero")
+            else:
+                try:
+                    conn = get_connection()
+                    cursor = conn.cursor()
+                    query = f"""
+                        INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(query, (
+                        fecha_actual,
+                        estudiante_seleccionado,
+                        grado,
+                        docente,
+                        asignatura,
+                        bloque,
+                        periodo_seleccionado,
+                        etapa,
+                        calificacion
+                    ))
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
+                    st.success(f"Registro guardado correctamente en {tabla} ✅")
+                except Exception as e:
+                    st.error(f"Ocurrió un error: {e}")
 
