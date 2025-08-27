@@ -6,7 +6,7 @@ import requests
 from io import BytesIO
 import warnings
 import matplotlib.pyplot as plt # type: ignore
-from datetime import date
+from datetime import datetime
 import pytz
 
 st.set_page_config(layout="wide")
