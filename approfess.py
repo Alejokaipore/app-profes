@@ -1131,7 +1131,7 @@ with col2:
     bogota = pytz.timezone("America/Bogota")
     fecha_actual = datetime.now(bogota).date()  # solo día, mes, año
 
-    st.write(f"Fecha del registro: {fecha_actual}")
+    st.write(f"Fecha dell registro: {fecha_actual}")
 
     # --- Lista de estudiantes y grado desde la base ---
     conn = get_connection()
