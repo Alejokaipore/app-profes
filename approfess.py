@@ -1151,6 +1151,7 @@ with col2:
     grado = estudiantes_dict[estudiante_seleccionado]
     st.write(f"Grado del estudiante: {grado}")
 
+
     # --- Otros campos ---
     bloque = st.text_input("Bloque")
     etapa = st.text_input("Etapa")
