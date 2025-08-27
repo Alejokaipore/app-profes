@@ -2,7 +2,6 @@ import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
 from corregir_nombres import corregir_nombre
-import datetime
 import requests
 from io import BytesIO
 import warnings
