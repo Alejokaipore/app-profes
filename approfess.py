@@ -1143,21 +1143,21 @@ with col2:
     cursor.close()
     conn.close()
 
-    # Diccionario {estudiante: grado}
-    estudiantes_dict = {row[0]: row[1] for row in data}
+   # --- Formulario ---
+    with st.form("formulario_estudiante"):
+        # Diccionario {estudiante: grado}
+        estudiantes_dict = {row[0]: row[1] for row in data}
 
-    # Lista de estudiantes para selectbox
-    estudiante_seleccionado = st.selectbox("", list(estudiantes_dict.keys()))
+        # Lista de estudiantes para selectbox
+        estudiante_seleccionado = st.selectbox("", list(estudiantes_dict.keys()))
 
-    # Grado automático según estudiante
-    grado = estudiantes_dict[estudiante_seleccionado]
-    st.write(f"Grado del estudiante: {grado}")
+        # Grado automático según estudiante
+        grado = estudiantes_dict[estudiante_seleccionado]
+        st.write(f"Grado del estudiante: {grado}")
 
-
-    # --- Otros campos ---
-    bloque = st.text_input("Bloque")
-    etapa = st.text_input("Etapa")
-    calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
-
+        # --- Otros campos ---
+        bloque = st.text_input("Bloque")
+        etapa = st.text_input("Etapa")
+        calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
 
 
