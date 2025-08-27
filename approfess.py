@@ -74,7 +74,7 @@ cursor = conn.cursor()
 
 # Consulta para traer todos los nombres de estudiantes
 cursor.execute("SELECT estudiante FROM estudiantes ORDER BY estudiante")
-estudiantes = [row[0] for row in cursor.fetchall()]
+estudiantess = [row[0] for row in cursor.fetchall()]
 
 cursor.close()
 conn.close()
@@ -121,8 +121,8 @@ with col1:
         df_nombres = pd.concat([LMOD1, LMOD2, MMOD1, MMOD2, WMOD1, WMOD2, JMOD1, JMOD2, VMOD1, VMOD2], ignore_index=True)
 
         # Crear un diccionario clave ESTUDIANTE y valor GRUPO
-        grupo_map = dict(zip(estudiantess['ESTUDIANTE'], estudiantess['GRUPO']))
-        grado_map = dict(zip(estudiantess['ESTUDIANTE'], estudiantess['GRADO']))
+        grupo_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRUPO']))
+        grado_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRADO']))
 
         # Asignar grupo y grado correspondiente a cada estudiante de df_nombres
         df_nombres['1'] = df_nombres.iloc[:, 0].map(grupo_map)
@@ -1115,6 +1115,8 @@ with col2:
     st.subheader("Notas")
     st.write(F5_2)
 
+############################################## FORMULARIO PARA INGRESAR NOTAS ##############################################
+
     # Lista de areas
     materias = ["Matemáticas", "Español", "Inglés", "Ciencias", "Historia"]
 
@@ -1131,7 +1133,7 @@ with col2:
     bogota = pytz.timezone("America/Bogota")
     fecha_actual = datetime.now(bogota).date()  # solo día, mes, año
 
-    st.write(f"Fecha dell registro: {fecha_actual}")
+    st.write(f"Fecha del registro: {fecha_actual}")
 
     # --- Lista de estudiantes y grado desde la base ---
     conn = get_connection()
