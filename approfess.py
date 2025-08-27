@@ -1118,7 +1118,7 @@ with col2:
 ############################################## FORMULARIO PARA INGRESAR NOTAS ##############################################
 
     # Lista de areas
-    materias = ["Matemáticas", "Español", "Inglés", "Ciencias", "Historia"]
+    materias = ["Matemáticas", "Lenguaje", "Inglés", "Ciencias", "Sociales"]
 
     # Lista de periodos
     periodos = ["Periodo 1", "Periodo 2", "Periodo 3", "Periodo 4"]
@@ -1156,13 +1156,13 @@ with col2:
         st.write(f"Grado del estudiante: {grado}")
 
         # "area" debe venir de la selección previa (fuera del formulario)
-        if area == "Ciencias":
+        if materia_seleccionada == "Ciencias":
             asignatura = st.selectbox("Asignatura", ciencias_1_5)
-        elif area == "Sociales":
+        elif materia_seleccionada == "Sociales":
             asignatura = st.selectbox("Asignatura", sociales_1_5)
-        elif area == "Lenguaje":
+        elif materia_seleccionada == "Lenguaje":
             asignatura = st.selectbox("Asignatura", lenguaje_1_5)
-        elif area == "Matemáticas":
+        elif materia_seleccionada == "Matemáticas":
             asignatura = st.selectbox("Asignatura", matematicas_1_5)
         else:
             asignatura = None  # En caso de que no se haya escogido área
