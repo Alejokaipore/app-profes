@@ -1042,6 +1042,10 @@ with col1:
         st.subheader("F1")
         st.write(df_horario)
 
+import streamlit as st
+import pandas as pd
+from db_utils import get_connection
+
 # Diccionario de tablas según área
 tablas_por_area = {
     "Sociales": "primaria_s",
@@ -1051,7 +1055,10 @@ tablas_por_area = {
     "Inglés": "primaria_e"  # si existe
 }
 
-tabla = tablas_por_area.get(materia_seleccionada)
+# Área seleccionada (ya la tienes de tu selectbox inicial)
+area_seleccionada = st.selectbox("Selecciona un área para ver la tabla:", list(tablas_por_area.keys()))
+
+tabla = tablas_por_area.get(area_seleccionada)
 
 if tabla:
     try:
@@ -1072,7 +1079,7 @@ if tabla:
         st.error(f"Ocurrió un error al cargar la tabla: {e}")
 else:
     st.warning("Área no válida seleccionada")
-        
+
 
 with col2:
     # Barra de búsqueda con autocompletado
