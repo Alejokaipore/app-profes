@@ -1173,3 +1173,14 @@ with col2:
         calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
 
 
+        # Docente y tabla según área
+        area_info = {
+            "Sociales": ("ANA MORA", "primaria_s"),
+            "Matemáticas": ("GINA", "primaria_m"),
+            "Lenguaje": ("CAMILA", "primaria_l"),
+            "Ciencias": ("LEONARDO", "primaria_c")
+        }
+
+        docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
+        st.write(f"Docente asignado: {docente}")
+
