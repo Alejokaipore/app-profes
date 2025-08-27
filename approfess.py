@@ -50,7 +50,7 @@ def cargar_notas():
 
 notas = cargar_notas()
 planeacion_primaria = cargar_planeacion()
-estudiantes = cargar_listado()
+estudiantess = cargar_listado()
 
 notas['GRADO'] = notas['GRADO'].astype(str)
 notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
@@ -121,8 +121,8 @@ with col1:
         df_nombres = pd.concat([LMOD1, LMOD2, MMOD1, MMOD2, WMOD1, WMOD2, JMOD1, JMOD2, VMOD1, VMOD2], ignore_index=True)
 
         # Crear un diccionario clave ESTUDIANTE y valor GRUPO
-        grupo_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRUPO']))
-        grado_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRADO']))
+        grupo_map = dict(zip(estudiantess['ESTUDIANTE'], estudiantes['GRUPO']))
+        grado_map = dict(zip(estudiantess['ESTUDIANTE'], estudiantes['GRADO']))
 
         # Asignar grupo y grado correspondiente a cada estudiante de df_nombres
         df_nombres['1'] = df_nombres.iloc[:, 0].map(grupo_map)
