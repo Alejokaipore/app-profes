@@ -50,7 +50,7 @@ def cargar_notas():
 
 notas = cargar_notas()
 planeacion_primaria = cargar_planeacion()
-estudiantess = cargar_listado()
+estudiantes = cargar_listado()
 
 notas['GRADO'] = notas['GRADO'].astype(str)
 notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
@@ -1158,9 +1158,6 @@ with col2:
     bloque = st.text_input("Bloque")
     etapa = st.text_input("Etapa")
     calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
-
-
-
 
 
 
