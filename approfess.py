@@ -1051,7 +1051,7 @@ tablas_por_area = {
     "Inglés": "primaria_e"  # si existe
 }
 
-tabla = tablas_por_area.get(area_seleccionada)
+tabla = tablas_por_area.get(materia_seleccionada)
 
 if tabla:
     try:
