@@ -8,6 +8,7 @@ from io import BytesIO
 import warnings
 import matplotlib.pyplot as plt # type: ignore
 from datetime import date
+import pytz
 
 st.set_page_config(layout="wide")
 
@@ -1113,11 +1114,11 @@ with col2:
     # Selectbox para periodo
     periodo_seleccionado = st.selectbox("Selecciona un periodo:", periodos)
 
-    # Obtener fecha actual
-    fecha_actual = date.today() 
-    st.write(f"Fecha del registro: {fecha_actual}")
+    # Fijar zona horaria
+    bogota = pytz.timezone("America/Bogota")
+    fecha_actual = datetime.now(bogota).date()  # solo día, mes, año
 
-
+    st.write(f"Fecha del registro:{fecha_actual}")
 
 
 
