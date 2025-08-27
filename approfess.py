@@ -1042,10 +1042,6 @@ with col1:
         st.subheader("F1")
         st.write(df_horario)
 
-    import streamlit as st
-    import pandas as pd
-    from db_utils import get_connection
-
     # Diccionario de tablas según área
     tablas_por_area = {
         "Sociales": "primaria_s",
