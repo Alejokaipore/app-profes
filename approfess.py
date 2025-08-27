@@ -1155,6 +1155,18 @@ with col2:
         grado = estudiantes_dict[estudiante_seleccionado]
         st.write(f"Grado del estudiante: {grado}")
 
+        # "area" debe venir de la selección previa (fuera del formulario)
+        if area == "Ciencias":
+            asignatura = st.selectbox("Asignatura", ciencias_1_5)
+        elif area == "Sociales":
+            asignatura = st.selectbox("Asignatura", sociales_1_5)
+        elif area == "Lenguaje":
+            asignatura = st.selectbox("Asignatura", lenguaje_1_5)
+        elif area == "Matemáticas":
+            asignatura = st.selectbox("Asignatura", matematicas_1_5)
+        else:
+            asignatura = None  # En caso de que no se haya escogido área
+
         # --- Otros campos ---
         bloque = st.text_input("Bloque")
         etapa = st.text_input("Etapa")
