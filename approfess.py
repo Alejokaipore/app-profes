@@ -1175,7 +1175,7 @@ with col2:
    # --- Formulario ---
     with st.form("formulario_estudiante"):
         # Diccionario {estudiante: grado}
-        estudiantes_dict = {row[0]: row[1] for row in estudiantes}
+        estudiantes_dict = dict(zip(estudiantes["ESTUDIANTE"], estudiantes["GRADO"]))
 
         # Lista de estudiantes para selectbox
         estudiante_seleccionado = st.selectbox("", list(estudiantes_dict.keys()))
