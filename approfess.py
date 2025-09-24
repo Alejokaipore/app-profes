@@ -82,17 +82,6 @@ lenguaje_1_5    = ['Comunicación y sistemas simbólicos','Producción e interpr
 matematicas_1_5 = ['Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas','Animaplanos']
 
 
-# Conectar a la base
-conn = get_connection()
-cursor = conn.cursor()
-
-# Consulta para traer todos los nombres de estudiantes
-cursor.execute("SELECT estudiante FROM estudiantes ORDER BY estudiante")
-estudiantess = [row[0] for row in cursor.fetchall()]
-
-cursor.close()
-conn.close()
-
 
 col1, col2 = st.columns(2)
 
