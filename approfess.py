@@ -1177,9 +1177,6 @@ with col2:
         # Diccionario {estudiante: grado}
         estudiantes_dict = dict(zip(estudiantes["ESTUDIANTE"], estudiantes["GRADO"]))
 
-        # Lista de estudiantes para selectbox
-        estudiante_seleccionado = st.selectbox("", list(estudiantes_dict.keys()))
-
         # Grado automático según estudiante
         grado = estudiantes_dict[estudiante_seleccionado]
         st.write(f"Grado del estudiante: {grado}")
