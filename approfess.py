@@ -1219,7 +1219,8 @@ with col2:
             "Sociales": ("ANA MORA", "primaria_s"),
             "Matemáticas": ("GINA", "primaria_m"),
             "Lenguaje": ("CAMILA", "primaria_l"),
-            "Ciencias": ("LEONARDO", "primaria_c")
+            "Ciencias": ("LEONARDO", "primaria_c"),
+            "Inglés": ("JUAN ANDRÉS", "primaria_e")
         }
 
         docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
