@@ -50,9 +50,21 @@ def cargar_notas():
     df = df[~df['ASIGNATURA'].isin(ingles)]
     return df
 
+@st.cache_data
+def cargar_notas_ingles():
+    response = requests.get(url_excel)
+    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
+    df = pd.read_excel(BytesIO(response.content), sheet_name='GK2025')
+    df['GRADO'] = df['GRADO'].astype(str)
+    df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
+    df['FECHA'] = pd.to_datetime(df['FECHA'], errors='coerce')
+    df = df[df['ASIGNATURA'].isin(ingles)]
+    return df
+
 notas = cargar_notas()
 planeacion_primaria = cargar_planeacion()
 estudiantes = cargar_listado()
+notas_ingles = cargar_notas_ingles()
 
 notas['GRADO'] = notas['GRADO'].astype(str)
 notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
@@ -1102,7 +1114,6 @@ with col2:
 
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'C':
             F5_2 = pd.DataFrame(np.full((len(ciencias_1_5), 20), "", dtype=str), index=ciencias_1_5, columns= columnas_personalizadas)
-            largo = {}
             for asignatura,_ in F5_2.iterrows():
                 notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
@@ -1110,11 +1121,9 @@ with col2:
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
                 lista_calificaciones = notas_asi['CALIFICACIÓN'].tolist()
                 F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
-            notas_año = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado)]
 
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'S':
             F5_2 = pd.DataFrame(np.full((len(sociales_1_5), 20), "", dtype=str), index=sociales_1_5, columns= columnas_personalizadas)
-            largo = {}
             for asignatura,_ in F5_2.iterrows():
                 notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
@@ -1122,11 +1131,9 @@ with col2:
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
                 lista_calificaciones = notas_asi['CALIFICACIÓN'].tolist()
                 F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
-            notas_año = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado)]
 
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'L':
             F5_2 = pd.DataFrame(np.full((len(lenguaje_1_5), 20), "", dtype=str), index=lenguaje_1_5, columns= columnas_personalizadas)
-            largo = {}
             for asignatura,_ in F5_2.iterrows():
                 notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
@@ -1134,11 +1141,9 @@ with col2:
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
                 lista_calificaciones = notas_asi['CALIFICACIÓN'].tolist()
                 F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
-            notas_año = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado)]
 
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'M':
             F5_2 = pd.DataFrame(np.full((len(matematicas_1_5), 20), "", dtype=str), index=matematicas_1_5, columns= columnas_personalizadas)
-            largo = {}
             for asignatura,_ in F5_2.iterrows():
                 notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
@@ -1146,7 +1151,16 @@ with col2:
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
                 lista_calificaciones = notas_asi['CALIFICACIÓN'].tolist()
                 F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
-            notas_año = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado)]
+        
+        if area_seleccionada == 'E':
+            F5_2 = pd.DataFrame(np.full((len(ingles), 20), "", dtype=str), index=ingles, columns= columnas_personalizadas)
+            for asignatura,_ in F5_2.iterrows():
+                notas_asi = notas_ingles[ (notas_ingles['ESTUDIANTE'] == estudiante_seleccionado) & (notas_ingles['GRADO'] == grado) & (notas_ingles['ASIGNATURA'] == asignatura) ]
+                notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
+                notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
+                notas_asi = notas_asi.drop(columns='ETAPA_ORD')
+                lista_calificaciones = notas_asi['CALIFICACIÓN'].tolist()
+                F5_2.iloc[F5_2.index.get_loc(asignatura), :len(lista_calificaciones)] = lista_calificaciones
 
     st.subheader("Notas")
     st.write(F5_2)
