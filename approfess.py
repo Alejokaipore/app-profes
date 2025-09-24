@@ -64,10 +64,10 @@ asignaturas_1_5= ['Biología','Química','Medio ambiente','Física',
                   'Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas']
 
 
-ciencias_1_5    = ['Biología','Química','Medio ambiente','Física']
-sociales_1_5    = ['Historia', 'Geografía', 'Participación política','Pensamiento religioso']
-lenguaje_1_5    = ['Comunicación y sistemas simbólicos','Producción e interpretación de textos','Pensamiento religioso']
-matematicas_1_5 = ['Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas']
+ciencias_1_5    = ['Biología','Química','Medio ambiente','Física','Animaplanos']
+sociales_1_5    = ['Historia', 'Geografía', 'Participación política','Pensamiento religioso','Animaplanos']
+lenguaje_1_5    = ['Comunicación y sistemas simbólicos','Producción e interpretación de textos','Pensamiento religioso','Animaplanos']
+matematicas_1_5 = ['Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas','Animaplanos']
 
 
 # Conectar a la base
