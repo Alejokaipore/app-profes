@@ -11,7 +11,7 @@ database=st.secrets["mysql"]["database"]
 
 def crear_engine():
     return create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}"
     )
 
 def obtener_notas_planetscale():
@@ -54,7 +54,7 @@ def obtener_notas_planetscale():
         """
     
     engine = create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}"
     )
     with engine.connect() as conn:
         df1 = pd.read_sql(query1, conn)
@@ -65,7 +65,7 @@ def obtener_notas_planetscale():
 def listado_general_planetscale():
     query = "SELECT estudiante, grupo, grado, dg, correo, meta FROM estudiantes"
     engine = create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}"
     )
     with engine.connect() as conn:
         df = pd.read_sql(query, conn)
