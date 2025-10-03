@@ -9,27 +9,23 @@ import matplotlib.pyplot as plt # type: ignore
 from datetime import datetime
 import pytz
 import mysql.connector
-from db_utils import get_connection 
+from db_utils import crear_engine, obtener_notas_planetscale,listado_general_planetscale
 
 #Esta nota es para verificar llave ssh
 
 st.set_page_config(layout="wide")
 
 # Enlace de descarga directa 
-url_excel = "https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/ESsbWoRrT2pOq7G6DlLrtAgB7gRvw3J5komJxW7VzbM_vg?download=1"
 url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
-url_excel_listado = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EW47uW_fJFtInsbP1zH_30gBdsFrR5Asr0ouwkvcoqEmXA?download=1'
 
 
-ingles = ['Inglés - listening','Inglés - speaking','Inglés - writing', 'Inglés - reading']
+ingles = ['INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING']
 
 def cargar_listado():
-    response = requests.get(url_excel_listado)
-    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
-    df = pd.read_excel(BytesIO(response.content), sheet_name='g')
-    df['GRADO'] = df['GRADO'].astype(str)
-    df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
-    df = df[df['GRADO'].isin(['1','2','3','4','5'])]
+    df = listado_general_planetscale()
+    df['grado'] = df['grado'].astype(str)
+    df['estudiante'] = df['estudiante'].apply(corregir_nombre)
+    df = df[df['grado'].isin(['1','2','3','4','5'])]
     return df
 
 
@@ -41,23 +37,19 @@ def cargar_planeacion():
 
 @st.cache_data
 def cargar_notas():
-    response = requests.get(url_excel)
-    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
-    df = pd.read_excel(BytesIO(response.content), sheet_name='GK2025')
-    df['GRADO'] = df['GRADO'].astype(str)
-    df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
-    df['FECHA'] = pd.to_datetime(df['FECHA'], errors='coerce')
+    df = obtener_notas_planetscale()
+    df['grado'] = df['grado'].astype(str)
+    df['estudiante'] = df['estudiante'].apply(corregir_nombre)
+    df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
     df = df[~df['ASIGNATURA'].isin(ingles)]
     return df
 
 @st.cache_data
 def cargar_notas_ingles():
-    response = requests.get(url_excel)
-    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
-    df = pd.read_excel(BytesIO(response.content), sheet_name='GK2025')
-    df['GRADO'] = df['GRADO'].astype(str)
-    df['ESTUDIANTE'] = df['ESTUDIANTE'].apply(corregir_nombre)
-    df['FECHA'] = pd.to_datetime(df['FECHA'], errors='coerce')
+    df = obtener_notas_planetscale()
+    df['grado'] = df['grado'].astype(str)
+    df['estudiante'] = df['estudiante'].apply(corregir_nombre)
+    df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
     df = df[df['ASIGNATURA'].isin(ingles)]
     return df
 
@@ -66,21 +58,20 @@ planeacion_primaria = cargar_planeacion()
 estudiantes = cargar_listado()
 notas_ingles = cargar_notas_ingles()
 
-notas['GRADO'] = notas['GRADO'].astype(str)
-notas['ESTUDIANTE'] = notas['ESTUDIANTE'].apply(corregir_nombre)
+notas['grado'] = notas['grado'].astype(str)
+notas['estudiante'] = notas['estudiante'].apply(corregir_nombre)
 
-asignaturas_1_5= ['Biología','Química','Medio ambiente','Física',
-                  'Historia', 'Geografía', 'Participación política','Pensamiento religioso',
-                  'Comunicación y sistemas simbólicos','Producción e interpretación de textos',
-                  'Inglés - listening','Inglés - speaking','Inglés - writing', 'Inglés - reading',
-                  'Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas']
+asignaturas_1_5= ['BIOLOGIA','QUIMICA','MEDIO AMBIENTE','FISICA',
+                  'HISTORIA', 'GEOGRAFIA', 'PARTICIPACION POLITICA','PENSAMIENTO RELIGIOSO',
+                  'COMUNICACION Y SISTEMAS SIMBOLICOS','PRODUCCION E INTERPRETACION DE TEXTOS',
+                  'INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING',
+                  'ARITMETICA','ANIMAPLANOS','ESTADISTICA', 'GEOMETRIA', 'DIBUJO TECNICO', 'SISTEMAS']
 
 
-ciencias_1_5    = ['Biología','Química','Medio ambiente','Física','Animaplanos']
-sociales_1_5    = ['Historia', 'Geografía', 'Participación política','Pensamiento religioso','Animaplanos']
-lenguaje_1_5    = ['Comunicación y sistemas simbólicos','Producción e interpretación de textos','Pensamiento religioso','Animaplanos']
-matematicas_1_5 = ['Aritmética','Animaplanos','Estadística', 'Geometría', 'Dibujo técnico', 'Sistemas','Animaplanos']
-
+ciencias_1_5    = ['BIOLOGIA','QUIMICA','MEDIO AMBIENTE','FISICA','ANIMAPLANOS']
+sociales_1_5    = ['HISTORIA', 'GEOGRAFIA', 'PARTICIPACION POLITICA','PENSAMIENTO RELIGIOSO','ANIMAPLANOS']
+lenguaje_1_5    = ['COMUNICACION Y SISTEMAS SIMBOLICOS','PRODUCCION E INTERPRETACION DE TEXTOS','PENSAMIENTO RELIGIOSO','ANIMAPLANOS']
+matematicas_1_5 = ['ARITMETICA','ANIMAPLANOS','ESTADISTICA', 'GEOMETRIA', 'DIBUJO TECNICO', 'SISTEMAS''ANIMAPLANOS']
 
 
 col1, col2 = st.columns(2)
@@ -123,9 +114,9 @@ with col1:
         
         df_nombres = pd.concat([LMOD1, LMOD2, MMOD1, MMOD2, WMOD1, WMOD2, JMOD1, JMOD2, VMOD1, VMOD2], ignore_index=True)
 
-        # Crear un diccionario clave ESTUDIANTE y valor GRUPO
-        grupo_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRUPO']))
-        grado_map = dict(zip(estudiantes['ESTUDIANTE'], estudiantes['GRADO']))
+        # Crear un diccionario clave estudiante y valor GRUPO
+        grupo_map = dict(zip(estudiantes['estudiante'], estudiantes['GRUPO']))
+        grado_map = dict(zip(estudiantes['estudiante'], estudiantes['grado']))
 
         # Asignar grupo y grado correspondiente a cada estudiante de df_nombres
         df_nombres['1'] = df_nombres.iloc[:, 0].map(grupo_map)
@@ -1084,7 +1075,7 @@ with col2:
     # Barra de búsqueda con autocompletado
     estudiante_seleccionado = st.selectbox(
         "Selecciona un estudiante:",
-        estudiantes['ESTUDIANTE'].unique()
+        estudiantes['estudiante'].unique()
     )
 
     # Definir el orden personalizado para ETAPA
@@ -1096,7 +1087,7 @@ with col2:
     if estudiante_seleccionado and area_seleccionada in ['C','S','L','M','E']:
 
         # Filtrar la base principal por el estudiante seleccionado
-        grado = estudiantes.loc[estudiantes['ESTUDIANTE'] == estudiante_seleccionado, 'GRADO'].values[0]
+        grado = estudiantes.loc[estudiantes['estudiante'] == estudiante_seleccionado, 'grado'].values[0]
         grado = str(grado)
 
         #aqui se crea el f5 de acuerdo al area
@@ -1104,7 +1095,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'C':
             F5_2 = pd.DataFrame(np.full((len(ciencias_1_5), 20), "", dtype=str), index=ciencias_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1114,7 +1105,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'S':
             F5_2 = pd.DataFrame(np.full((len(sociales_1_5), 20), "", dtype=str), index=sociales_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1124,7 +1115,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'L':
             F5_2 = pd.DataFrame(np.full((len(lenguaje_1_5), 20), "", dtype=str), index=lenguaje_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1134,7 +1125,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'M':
             F5_2 = pd.DataFrame(np.full((len(matematicas_1_5), 20), "", dtype=str), index=matematicas_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['ESTUDIANTE'] == estudiante_seleccionado) & (notas['GRADO'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1144,7 +1135,7 @@ with col2:
         if area_seleccionada == 'E':
             F5_2 = pd.DataFrame(np.full((len(ingles), 20), "", dtype=str), index=ingles, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas_ingles[ (notas_ingles['ESTUDIANTE'] == estudiante_seleccionado) & (notas_ingles['GRADO'] == grado) & (notas_ingles['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas_ingles[ (notas_ingles['estudiante'] == estudiante_seleccionado) & (notas_ingles['grado'] == grado) & (notas_ingles['ASIGNATURA'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1177,7 +1168,7 @@ with col2:
    # --- Formulario ---
     with st.form("formulario_estudiante"):
         # Diccionario {estudiante: grado}
-        estudiantes_dict = dict(zip(estudiantes["ESTUDIANTE"], estudiantes["GRADO"]))
+        estudiantes_dict = dict(zip(estudiantes["estudiante"], estudiantes["grado"]))
 
         # Grado automático según estudiante
         grado = estudiantes_dict[estudiante_seleccionado]
