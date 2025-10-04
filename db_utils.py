@@ -14,7 +14,7 @@ ssl_ca = st.secrets["mysql"]["ssl_ca"]
 def crear_engine():
     # Crear un archivo temporal con el contenido del certificado
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pem") as tmp:
-        tmp.write(ssl_ca_content.encode("utf-8"))
+        tmp.write(ssl_ca.encode("utf-8"))
         ca_path = tmp.name
 
     # Crear engine usando la ruta del archivo temporal
