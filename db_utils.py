@@ -1,15 +1,7 @@
 # db_utils.py
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
-
-host=st.secrets["mysql"]["host"],
-port=st.secrets["mysql"]["port"],
-user=st.secrets["mysql"]["user"],
-password=st.secrets["mysql"]["password"],
-database=st.secrets["mysql"]["database"]
-
-ssl_args = {"ssl": {"verify_ssl_cert": True}}
+from sqlalchemy import create_engine, text  # Agregar text aquí
 
 def crear_engine():
     # Obtener los secretos dentro de la función
@@ -19,9 +11,8 @@ def crear_engine():
     password = st.secrets["mysql"]["password"]
     database = st.secrets["mysql"]["database"]
     
-    # Diferentes opciones de SSL para PlanetScale
+    # Configuración SSL para PlanetScale
     try:
-        # Opción 1: SSL básico (funciona en la mayoría de casos)
         ssl_args = {"ssl": {"verify_ssl_cert": True}}
         
         connection_string = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
@@ -38,56 +29,57 @@ def crear_engine():
         )
 
 def obtener_notas_planetscale():
-   
-    query1 = """
-        SELECT 
-            n.fecha,
-            n.anio,
-            e.estudiante,
-            n.grado,
-            n.docente,
-            a.asignatura,
-            n.bloque,
-            n.periodo,
-            n.semana,
-            n.etapa,
-            n.calificacion
-        FROM notas n
-        JOIN estudiantes e ON e.codigo = n.codigo_estudiante
-        JOIN asignaturas a ON a.codigo = n.codigo_asignatura
-        LIMIT 700
-        """
-    query2 = """
-        SELECT 
-            n.fecha,
-            n.anio,
-            e.estudiante,
-            n.grado,
-            n.docente,
-            a.asignatura,
-            n.bloque,
-            n.periodo,
-            n.semana,
-            n.etapa,
-            n.calificacion
-        FROM notas n
-        JOIN estudiantes e ON e.codigo = n.codigo_estudiante
-        JOIN asignaturas a ON a.codigo = n.codigo_asignatura
-        LIMIT 100000 OFFSET 700
-        """
-    
-    # Usar la función crear_engine() que ya tienes
-    engine = crear_engine()
-    with engine.connect() as conn:
-        df1 = pd.read_sql(query1, conn)
-        df2 = pd.read_sql(query2, conn)
-    
-    df = pd.concat([df1, df2], ignore_index=True)
-    return df
-
-except Exception as e:
-    st.error(f"Error en obtener_notas_planetscale: {e}")
-    return pd.DataFrame()
+    try:
+        query1 = text("""
+            SELECT 
+                n.fecha,
+                n.anio,
+                e.estudiante,
+                n.grado,
+                n.docente,
+                a.asignatura,
+                n.bloque,
+                n.periodo,
+                n.semana,
+                n.etapa,
+                n.calificacion
+            FROM notas n
+            JOIN estudiantes e ON e.codigo = n.codigo_estudiante
+            JOIN asignaturas a ON a.codigo = n.codigo_asignatura
+            LIMIT 700
+        """)
+        
+        query2 = text("""
+            SELECT 
+                n.fecha,
+                n.anio,
+                e.estudiante,
+                n.grado,
+                n.docente,
+                a.asignatura,
+                n.bloque,
+                n.periodo,
+                n.semana,
+                n.etapa,
+                n.calificacion
+            FROM notas n
+            JOIN estudiantes e ON e.codigo = n.codigo_estudiante
+            JOIN asignaturas a ON a.codigo = n.codigo_asignatura
+            LIMIT 100000 OFFSET 700
+        """)
+        
+        # Usar la función crear_engine() que ya tienes
+        engine = crear_engine()
+        with engine.connect() as conn:
+            df1 = pd.read_sql(query1, conn)
+            df2 = pd.read_sql(query2, conn)
+        
+        df = pd.concat([df1, df2], ignore_index=True)
+        return df
+        
+    except Exception as e:
+        st.error(f"Error en obtener_notas_planetscale: {e}")
+        return pd.DataFrame()
 
 def listado_general_planetscale():
     try:
