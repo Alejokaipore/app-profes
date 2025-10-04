@@ -50,7 +50,7 @@ def cargar_notas():
     df['grado'] = df['grado'].astype(str)
     df['estudiante'] = df['estudiante'].apply(corregir_nombre)
     df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
-    df = df[~df['ASIGNATURA'].isin(ingles)]
+    df = df[~df['asignatura'].isin(ingles)]
     return df
 
 @st.cache_data
@@ -59,7 +59,7 @@ def cargar_notas_ingles():
     df['grado'] = df['grado'].astype(str)
     df['estudiante'] = df['estudiante'].apply(corregir_nombre)
     df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
-    df = df[df['ASIGNATURA'].isin(ingles)]
+    df = df[df['asignatura'].isin(ingles)]
     return df
 
 notas = cargar_notas()
@@ -163,7 +163,7 @@ with col1:
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
-                    notas_bloque_matematicas = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
+                    notas_bloque_matematicas = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['asignatura'].isin(asignaturas)) ]
                     if (len(notas_bloque_completo) < 80) and (len(notas_bloque_matematicas) == 30):
                         desempeno_encontrado = True
                         break
@@ -260,7 +260,7 @@ with col1:
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
-                    notas_bloque_sociales = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
+                    notas_bloque_sociales = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['asignatura'].isin(asignaturas)) ]
                     if (len(notas_bloque_completo) < 80) and (len(notas_bloque_sociales) == 15):
                         desempeno_encontrado = True
                         break
@@ -346,7 +346,7 @@ with col1:
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
-                    notas_bloque_lenguaje = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
+                    notas_bloque_lenguaje = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['asignatura'].isin(asignaturas)) ]
                     if (len(notas_bloque_completo) < 80) and (len(notas_bloque_lenguaje) == 15):
                         desempeno_encontrado = True
                         break
@@ -431,7 +431,7 @@ with col1:
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['BLOQUE'] == bloque ]
-                    notas_bloque_ciencias = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['ASIGNATURA'].isin(asignaturas)) ]
+                    notas_bloque_ciencias = notas_estudiante[ (notas_estudiante['BLOQUE'] == bloque) & (notas_estudiante['asignatura'].isin(asignaturas)) ]
                     if (len(notas_bloque_completo) < 80) and (len(notas_bloque_ciencias) == 20):
                         desempeno_encontrado = True
                         break
@@ -1104,7 +1104,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'C':
             F5_2 = pd.DataFrame(np.full((len(ciencias_1_5), 20), "", dtype=str), index=ciencias_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['asignatura'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1114,7 +1114,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'S':
             F5_2 = pd.DataFrame(np.full((len(sociales_1_5), 20), "", dtype=str), index=sociales_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['asignatura'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1124,7 +1124,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'L':
             F5_2 = pd.DataFrame(np.full((len(lenguaje_1_5), 20), "", dtype=str), index=lenguaje_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['asignatura'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1134,7 +1134,7 @@ with col2:
         if grado in ['1','2','3','4','5'] and area_seleccionada == 'M':
             F5_2 = pd.DataFrame(np.full((len(matematicas_1_5), 20), "", dtype=str), index=matematicas_1_5, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas[ (notas['estudiante'] == estudiante_seleccionado) & (notas['grado'] == grado) & (notas['asignatura'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
@@ -1144,7 +1144,7 @@ with col2:
         if area_seleccionada == 'E':
             F5_2 = pd.DataFrame(np.full((len(ingles), 20), "", dtype=str), index=ingles, columns= columnas_personalizadas)
             for asignatura,_ in F5_2.iterrows():
-                notas_asi = notas_ingles[ (notas_ingles['estudiante'] == estudiante_seleccionado) & (notas_ingles['grado'] == grado) & (notas_ingles['ASIGNATURA'] == asignatura) ]
+                notas_asi = notas_ingles[ (notas_ingles['estudiante'] == estudiante_seleccionado) & (notas_ingles['grado'] == grado) & (notas_ingles['asignatura'] == asignatura) ]
                 notas_asi['ETAPA_ORD'] = notas_asi['ETAPA'].map(orden_etapas)
                 notas_asi = notas_asi.sort_values(by=['BLOQUE', 'ETAPA_ORD'])
                 notas_asi = notas_asi.drop(columns='ETAPA_ORD')
