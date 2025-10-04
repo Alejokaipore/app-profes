@@ -123,8 +123,8 @@ with col1:
         
         df_nombres = pd.concat([LMOD1, LMOD2, MMOD1, MMOD2, WMOD1, WMOD2, JMOD1, JMOD2, VMOD1, VMOD2], ignore_index=True)
 
-        # Crear un diccionario clave estudiante y valor GRUPO
-        grupo_map = dict(zip(estudiantes['estudiante'], estudiantes['GRUPO']))
+        # Crear un diccionario clave estudiante y valor grupo
+        grupo_map = dict(zip(estudiantes['estudiante'], estudiantes['grupo']))
         grado_map = dict(zip(estudiantes['estudiante'], estudiantes['grado']))
 
         # Asignar grupo y grado correspondiente a cada estudiante de df_nombres
