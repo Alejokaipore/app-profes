@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
+import tempfile
 
 host=st.secrets["mysql"]["host"],
 port=st.secrets["mysql"]["port"],
@@ -11,11 +12,17 @@ database=st.secrets["mysql"]["database"]
 ssl_ca = st.secrets["mysql"]["ssl_ca"]
 
 def crear_engine():
+    # Crear un archivo temporal con el contenido del certificado
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pem") as tmp:
+        tmp.write(ssl_ca_content.encode("utf-8"))
+        ca_path = tmp.name
+
+    # Crear engine usando la ruta del archivo temporal
     return create_engine(
         f"mysql+pymysql://{user}:{password}@{host}/{database}",
         connect_args={
             "ssl": {
-                "ca": ssl_ca
+                "ca": ca_path
             }
         }
     )
