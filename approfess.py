@@ -1064,7 +1064,7 @@ with col1:
             
             with engine.connect() as conn:
                 # Usar text() para el query
-                query = text(f"SELECT * FROM {tabla} ORDER BY fecha DESC")
+                query = text(f"SELECT fecha, estudiante, grado, docente,asignatura, bloque, periodo, etapa, calificacion  FROM {tabla} ORDER BY fecha DESC WHERE procesamiento = 'NO'")
                 result = conn.execute(query)
                 data = result.fetchall()
                 cols = result.keys()  # nombres de columnas
