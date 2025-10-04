@@ -21,6 +21,11 @@ url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuel
 
 ingles = ['INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING']
 
+engine = crear_engine()
+with engine.connect() as conn:
+    result = conn.execute("SELECT 1")
+    st.write(result.fetchall())
+
 def cargar_listado():
     df = listado_general_planetscale()
     df['grado'] = df['grado'].astype(str)

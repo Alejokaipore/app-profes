@@ -8,10 +8,16 @@ port=st.secrets["mysql"]["port"],
 user=st.secrets["mysql"]["user"],
 password=st.secrets["mysql"]["password"],
 database=st.secrets["mysql"]["database"]
+ssl_ca = st.secrets["mysql"]["ssl_ca"]
 
 def crear_engine():
     return create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}/{database}"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}",
+        connect_args={
+            "ssl": {
+                "ca": ssl_ca
+            }
+        }
     )
 
 def obtener_notas_planetscale():
