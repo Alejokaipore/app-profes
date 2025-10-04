@@ -76,20 +76,29 @@ def obtener_notas_planetscale():
         LIMIT 100000 OFFSET 700
         """
     
-    engine = create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}/{database}"
-    )
+    # Usar la función crear_engine() que ya tienes
+    engine = crear_engine()
     with engine.connect() as conn:
         df1 = pd.read_sql(query1, conn)
         df2 = pd.read_sql(query2, conn)
+    
     df = pd.concat([df1, df2], ignore_index=True)
     return df
 
+except Exception as e:
+    st.error(f"Error en obtener_notas_planetscale: {e}")
+    return pd.DataFrame()
+
 def listado_general_planetscale():
-    query = "SELECT estudiante, grupo, grado, dg, correo, meta FROM estudiantes"
-    engine = create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}/{database}"
-    )
-    with engine.connect() as conn:
-        df = pd.read_sql(query, conn)
-    return df
+    try:
+        query = text("SELECT estudiante, grupo, grado, dg, correo, meta FROM estudiantes")
+        
+        # Usar la función crear_engine() que ya tienes
+        engine = crear_engine()
+        with engine.connect() as conn:
+            df = pd.read_sql(query, conn)
+        return df
+        
+    except Exception as e:
+        st.error(f"Error en listado_general_planetscale: {e}")
+        return pd.DataFrame()
