@@ -8,6 +8,7 @@ import warnings
 import matplotlib.pyplot as plt # type: ignore
 from datetime import datetime
 import pytz
+from sqlalchemy import text
 import mysql.connector
 from db_utils import crear_engine, obtener_notas_planetscale,listado_general_planetscale
 
@@ -20,7 +21,8 @@ ingles = ['INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING
 
 engine = crear_engine()
 with engine.connect() as conn:
-    result = conn.execute("SELECT 1")
+    # Usar text() para envolver el query SQL
+    result = conn.execute(text("SELECT 1"))
     st.write(result.fetchall())
 
 # Enlace de descarga directa 
