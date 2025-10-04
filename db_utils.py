@@ -9,10 +9,33 @@ user=st.secrets["mysql"]["user"],
 password=st.secrets["mysql"]["password"],
 database=st.secrets["mysql"]["database"]
 
+ssl_args = {"ssl": {"verify_ssl_cert": True}}
+
 def crear_engine():
-    return create_engine(
-        f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
-    )
+    # Obtener los secretos dentro de la función
+    host = st.secrets["mysql"]["host"]
+    port = st.secrets["mysql"]["port"]
+    user = st.secrets["mysql"]["user"]
+    password = st.secrets["mysql"]["password"]
+    database = st.secrets["mysql"]["database"]
+    
+    # Diferentes opciones de SSL para PlanetScale
+    try:
+        # Opción 1: SSL básico (funciona en la mayoría de casos)
+        ssl_args = {"ssl": {"verify_ssl_cert": True}}
+        
+        connection_string = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        
+        return create_engine(
+            connection_string,
+            connect_args=ssl_args
+        )
+    except Exception as e:
+        st.error(f"Error con SSL básico: {e}")
+        # Opción 2: Sin SSL args específicos (fallback)
+        return create_engine(
+            f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+        )
 
 def obtener_notas_planetscale():
    
