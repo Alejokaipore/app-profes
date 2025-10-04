@@ -23,7 +23,6 @@ engine = crear_engine()
 with engine.connect() as conn:
     # Usar text() para envolver el query SQL
     result = conn.execute(text("SELECT 1"))
-    st.write(result.fetchall())
 
 # Enlace de descarga directa 
 url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
@@ -1061,19 +1060,20 @@ with col1:
 
     if tabla:
         try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            query = f"SELECT * FROM {tabla} ORDER BY fecha DESC"
-            cursor.execute(query)
-            data = cursor.fetchall()
-            cols = [desc[0] for desc in cursor.description]  # nombres de columnas
-            cursor.close()
-            conn.close()
+            engine = crear_engine()  # Usa la misma función que ya tienes en db_utils.py
+            
+            with engine.connect() as conn:
+                # Usar text() para el query
+                query = text(f"SELECT * FROM {tabla} ORDER BY fecha DESC")
+                result = conn.execute(query)
+                data = result.fetchall()
+                cols = result.keys()  # nombres de columnas
 
             # Mostrar la tabla en Streamlit
             df = pd.DataFrame(data, columns=cols)
             st.write(f"Tabla: {tabla}")
             st.dataframe(df)
+            
         except Exception as e:
             st.error(f"Ocurrió un error al cargar la tabla: {e}")
     else:
