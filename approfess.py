@@ -1223,27 +1223,32 @@ with col2:
                 st.warning("Selecciona un área válida primero")
             else:
                 try:
-                    conn = get_connection()
-                    cursor = conn.cursor()
-                    query = f"""
-                        INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    """
-                    cursor.execute(query, (
-                        fecha_actual,
-                        estudiante_seleccionado,
-                        grado,
-                        docente,
-                        asignatura,
-                        bloque,
-                        periodo_seleccionado,
-                        etapa,
-                        calificacion
-                    ))
-                    conn.commit()
-                    cursor.close()
-                    conn.close()
+                    engine = crear_engine()
+                    
+                    with engine.connect() as conn:
+                        query = text(f"""
+                            INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
+                            VALUES (:fecha, :estudiante, :grado, :docente, :asignatura, :bloque, :periodo, :etapa, :calificacion)
+                        """)
+                        
+                        # Ejecutar con parámetros nombrados (más seguro y legible)
+                        conn.execute(query, {
+                            'fecha': fecha_actual,
+                            'estudiante': estudiante_seleccionado,
+                            'grado': grado,
+                            'docente': docente,
+                            'asignatura': asignatura,
+                            'bloque': bloque,
+                            'periodo': periodo_seleccionado,
+                            'etapa': etapa,
+                            'calificacion': calificacion
+                        })
+                        
+                        # Hacer commit de la transacción
+                        conn.commit()
+                    
                     st.success(f"Registro guardado correctamente en {tabla} ✅")
+                    
                 except Exception as e:
                     st.error(f"Ocurrió un error: {e}")
 
