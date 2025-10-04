@@ -15,9 +15,6 @@ from db_utils import crear_engine, obtener_notas_planetscale,listado_general_pla
 
 st.set_page_config(layout="wide")
 
-# Enlace de descarga directa 
-url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
-
 
 ingles = ['INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING']
 
@@ -25,6 +22,11 @@ engine = crear_engine()
 with engine.connect() as conn:
     result = conn.execute("SELECT 1")
     st.write(result.fetchall())
+
+# Enlace de descarga directa 
+url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
+
+
 
 def cargar_listado():
     df = listado_general_planetscale()
