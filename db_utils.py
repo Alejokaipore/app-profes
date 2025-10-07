@@ -46,7 +46,7 @@ def obtener_notas_planetscale():
             FROM notas n
             JOIN estudiantes e ON e.codigo = n.codigo_estudiante
             JOIN asignaturas a ON a.codigo = n.codigo_asignatura
-            LIMIT 700
+            LIMIT 70000
         """)
         
         query2 = text("""
@@ -65,7 +65,7 @@ def obtener_notas_planetscale():
             FROM notas n
             JOIN estudiantes e ON e.codigo = n.codigo_estudiante
             JOIN asignaturas a ON a.codigo = n.codigo_asignatura
-            LIMIT 100000 OFFSET 700
+            LIMIT 100000 OFFSET 70000
         """)
         
         # Usar la función crear_engine() que ya tienes
