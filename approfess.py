@@ -1205,8 +1205,8 @@ with col2:
                 asignatura = None  # En caso de que no se haya escogido área
 
             # --- Otros campos ---
-            bloque = st.text_input("Bloque")
-            etapa = st.text_input("Etapa")
+            bloque = st.selectbox("Bloque", ["A", "B", "C", "D"])
+            etapa = st.selectbox("Etapa", ["D1", "D2", "D3", "D4", "D5"])
             calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
 
 
@@ -1282,8 +1282,8 @@ with col2:
                 asignatura = None  # En caso de que no se haya escogido área
 
             # --- Otros campos ---
-            bloque = st.text_input("Bloque")
-            etapa = st.text_input("Etapa")
+            bloque = st.selectbox("Bloque", ["A", "B", "C", "D"])
+            etapa = st.selectbox("Etapa", ["D1", "D2", "D3", "D4", "D5"])
             calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
 
 
