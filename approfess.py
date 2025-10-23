@@ -1096,7 +1096,7 @@ with col2:
     if estudiante_seleccionado and area_seleccionada in ['C','S','L','M','E']:
 
         # Filtrar la base principal por el estudiante seleccionado
-        if area_seleccionada = 'E':
+        if area_seleccionada == 'E':
             grado_por_defecto = estudiantes.loc[estudiantes['estudiante'] == estudiante_seleccionado, 'grado'].values[0]
             grado = st.text_input("Grado", value=str(grado_por_defecto))
 
