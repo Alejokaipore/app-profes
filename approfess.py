@@ -1096,8 +1096,14 @@ with col2:
     if estudiante_seleccionado and area_seleccionada in ['C','S','L','M','E']:
 
         # Filtrar la base principal por el estudiante seleccionado
-        grado = estudiantes.loc[estudiantes['estudiante'] == estudiante_seleccionado, 'grado'].values[0]
-        grado = str(grado)
+        if area_seleccionada = 'E':
+            grado_por_defecto = estudiantes.loc[estudiantes['estudiante'] == estudiante_seleccionado, 'grado'].values[0]
+            grado = st.text_input("Grado", value=str(grado_por_defecto))
+
+        else:
+            grado = estudiantes.loc[estudiantes['estudiante'] == estudiante_seleccionado, 'grado'].values[0] 
+            grado = str(grado)
+
 
         #aqui se crea el f5 de acuerdo al area
 
