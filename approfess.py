@@ -1179,76 +1179,156 @@ with col2:
         # Diccionario {estudiante: grado}
         estudiantes_dict = dict(zip(estudiantes["estudiante"], estudiantes["grado"]))
 
-        # Grado automático según estudiante
-        grado = estudiantes_dict[estudiante_seleccionado]
-        st.write(f"Grado del estudiante: {grado}")
+        if materia_seleccionada != 'Inglés':
+            # Grado automático según estudiante
+            grado = estudiantes_dict[estudiante_seleccionado]
+            st.write(f"Grado del estudiante: {grado}")
 
-        # "area" debe venir de la selección previa (fuera del formulario)
-        if materia_seleccionada == "Ciencias":
-            asignatura = st.selectbox("Asignatura", ciencias_1_5)
-        elif materia_seleccionada == "Sociales":
-            asignatura = st.selectbox("Asignatura", sociales_1_5)
-        elif materia_seleccionada == "Lenguaje":
-            asignatura = st.selectbox("Asignatura", lenguaje_1_5)
-        elif materia_seleccionada == "Matemáticas":
-            asignatura = st.selectbox("Asignatura", matematicas_1_5)
-        elif materia_seleccionada == "Inglés":
-            asignatura = st.selectbox("Asignatura", ingles)
-        else:
-            asignatura = None  # En caso de que no se haya escogido área
-
-        # --- Otros campos ---
-        bloque = st.text_input("Bloque")
-        etapa = st.text_input("Etapa")
-        calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
-
-
-        # Docente y tabla según área
-        area_info = {
-            "Sociales": ("ANA MORA", "primaria_s"),
-            "Matemáticas": ("GINA", "primaria_m"),
-            "Lenguaje": ("CAMILA", "primaria_l"),
-            "Ciencias": ("LEONARDO", "primaria_c"),
-            "Inglés": ("JUAN ANDRÉS", "primaria_e")
-        }
-
-        docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
-        st.write(f"Docente : {docente}")
-
-        # --- Botón de submit ---
-        submitted = st.form_submit_button("Guardar")
-
-        if submitted:
-            if asignatura is None or tabla is None:
-                st.warning("Selecciona un área válida primero")
+            # "area" debe venir de la selección previa (fuera del formulario)
+            if materia_seleccionada == "Ciencias":
+                asignatura = st.selectbox("Asignatura", ciencias_1_5)
+            elif materia_seleccionada == "Sociales":
+                asignatura = st.selectbox("Asignatura", sociales_1_5)
+            elif materia_seleccionada == "Lenguaje":
+                asignatura = st.selectbox("Asignatura", lenguaje_1_5)
+            elif materia_seleccionada == "Matemáticas":
+                asignatura = st.selectbox("Asignatura", matematicas_1_5)
+            elif materia_seleccionada == "Inglés":
+                asignatura = st.selectbox("Asignatura", ingles)
             else:
-                try:
-                    engine = crear_engine()
-                    
-                    with engine.connect() as conn:
-                        query = text(f"""
-                            INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
-                            VALUES (:fecha, :estudiante, :grado, :docente, :asignatura, :bloque, :periodo, :etapa, :calificacion)
-                        """)
+                asignatura = None  # En caso de que no se haya escogido área
+
+            # --- Otros campos ---
+            bloque = st.text_input("Bloque")
+            etapa = st.text_input("Etapa")
+            calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
+
+
+            # Docente y tabla según área
+            area_info = {
+                "Sociales": ("ANA MORA", "primaria_s"),
+                "Matemáticas": ("GINA", "primaria_m"),
+                "Lenguaje": ("CAMILA", "primaria_l"),
+                "Ciencias": ("LEONARDO", "primaria_c"),
+                "Inglés": ("JUAN ANDRÉS", "primaria_e")
+            }
+
+            docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
+            st.write(f"Docente : {docente}")
+
+            # --- Botón de submit ---
+            submitted = st.form_submit_button("Guardar")
+
+            if submitted:
+                if asignatura is None or tabla is None:
+                    st.warning("Selecciona un área válida primero")
+                else:
+                    try:
+                        engine = crear_engine()
                         
-                        # Ejecutar con parámetros nombrados (más seguro y legible)
-                        conn.execute(query, {
-                            'fecha': fecha_actual,
-                            'estudiante': estudiante_seleccionado,
-                            'grado': grado,
-                            'docente': docente,
-                            'asignatura': asignatura,
-                            'bloque': bloque,
-                            'periodo': periodo_seleccionado,
-                            'etapa': etapa,
-                            'calificacion': calificacion
-                        })
+                        with engine.connect() as conn:
+                            query = text(f"""
+                                INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
+                                VALUES (:fecha, :estudiante, :grado, :docente, :asignatura, :bloque, :periodo, :etapa, :calificacion)
+                            """)
+                            
+                            # Ejecutar con parámetros nombrados (más seguro y legible)
+                            conn.execute(query, {
+                                'fecha': fecha_actual,
+                                'estudiante': estudiante_seleccionado,
+                                'grado': grado,
+                                'docente': docente,
+                                'asignatura': asignatura,
+                                'bloque': bloque,
+                                'periodo': periodo_seleccionado,
+                                'etapa': etapa,
+                                'calificacion': calificacion
+                            })
+                            
+                            # Hacer commit de la transacción
+                            conn.commit()
                         
-                        # Hacer commit de la transacción
-                        conn.commit()
-                    
-                    st.success(f"Registro guardado correctamente en {tabla} ✅")
-                    
-                except Exception as e:
-                    st.error(f"Ocurrió un error: {e}")
+                        st.success(f"Registro guardado correctamente en {tabla} ✅")
+                        
+                    except Exception as e:
+                        st.error(f"Ocurrió un error: {e}")
+
+        else:
+            
+            
+            grado = estudiantes_dict[estudiante_seleccionado]
+            st.write(f"Grado del estudiante: {grado}")
+
+            grado_distinto = st.text_input("Ingresar un grado distinto")
+
+            # "area" debe venir de la selección previa (fuera del formulario)
+            if materia_seleccionada == "Ciencias":
+                asignatura = st.selectbox("Asignatura", ciencias_1_5)
+            elif materia_seleccionada == "Sociales":
+                asignatura = st.selectbox("Asignatura", sociales_1_5)
+            elif materia_seleccionada == "Lenguaje":
+                asignatura = st.selectbox("Asignatura", lenguaje_1_5)
+            elif materia_seleccionada == "Matemáticas":
+                asignatura = st.selectbox("Asignatura", matematicas_1_5)
+            elif materia_seleccionada == "Inglés":
+                asignatura = st.selectbox("Asignatura", ingles)
+            else:
+                asignatura = None  # En caso de que no se haya escogido área
+
+            # --- Otros campos ---
+            bloque = st.text_input("Bloque")
+            etapa = st.text_input("Etapa")
+            calificacion = st.number_input("Calificación", min_value=3.6, max_value=5.0, step=0.1)
+
+
+            # Docente y tabla según área
+            area_info = {
+                "Sociales": ("ANA MORA", "primaria_s"),
+                "Matemáticas": ("GINA", "primaria_m"),
+                "Lenguaje": ("CAMILA", "primaria_l"),
+                "Ciencias": ("LEONARDO", "primaria_c"),
+                "Inglés": ("JUAN ANDRÉS", "primaria_e")
+            }
+
+            docente, tabla = area_info.get(materia_seleccionada, ("Desconocido", None))
+            st.write(f"Docente : {docente}")
+
+            # --- Botón de submit ---
+            submitted = st.form_submit_button("Guardar")
+
+            if submitted:
+                if asignatura is None or tabla is None:
+                    st.warning("Selecciona un área válida primero")
+                else:
+                    try:
+                        engine = crear_engine()
+                        
+                        with engine.connect() as conn:
+                            query = text(f"""
+                                INSERT INTO {tabla} (fecha, estudiante, grado, docente, asignatura, bloque, periodo, etapa, calificacion)
+                                VALUES (:fecha, :estudiante, :grado, :docente, :asignatura, :bloque, :periodo, :etapa, :calificacion)
+                            """)
+                            
+                            # Ejecutar con parámetros nombrados (más seguro y legible)
+                            conn.execute(query, {
+                                'fecha': fecha_actual,
+                                'estudiante': estudiante_seleccionado,
+                                'grado': grado_distinto,
+                                'docente': docente,
+                                'asignatura': asignatura,
+                                'bloque': bloque,
+                                'periodo': periodo_seleccionado,
+                                'etapa': etapa,
+                                'calificacion': calificacion
+                            })
+                            
+                            # Hacer commit de la transacción
+                            conn.commit()
+                        
+                        st.success(f"Registro guardado correctamente en {tabla} ✅")
+                        
+                    except Exception as e:
+                        st.error(f"Ocurrió un error: {e}")
+
+            
 
