@@ -66,7 +66,7 @@ asignaturas_1_5= ['BIOLOGIA','QUIMICA','MEDIO AMBIENTE','FISICA',
 ciencias_1_5    = ['BIOLOGIA','QUIMICA','MEDIO AMBIENTE','FISICA','ANIMAPLANOS']
 sociales_1_5    = ['HISTORIA', 'GEOGRAFIA', 'PARTICIPACION POLITICA','PENSAMIENTO RELIGIOSO','ANIMAPLANOS']
 lenguaje_1_5    = ['COMUNICACION Y SISTEMAS SIMBOLICOS','PRODUCCION E INTERPRETACION DE TEXTOS','PENSAMIENTO RELIGIOSO','ANIMAPLANOS']
-matematicas_1_5 = ['ARITMETICA','ANIMAPLANOS','ESTADISTICA', 'GEOMETRIA', 'DIBUJO TECNICO', 'SISTEMAS','ANIMAPLANOS']
+matematicas_1_5 = ['ARITMETICA','ANIMAPLANOS','ESTADISTICA', 'GEOMETRIA', 'DIBUJO TECNICO', 'SISTEMAS']
 
 
 col1, col2 = st.columns(2)
@@ -145,7 +145,7 @@ with col1:
                     continue
                     
                 bloques = ['A', 'B', 'C', 'D'] #define los bloques que se pueden encontrar en la base de datos
-                asignaturas = ['Aritmética', 'Estadística', 'Geometría','Dibujo técnico', 'Sistemas','Animaplanos'] #define las asignaturas de Matematicas
+                asignaturas = ['ARITMETICA','ANIMAPLANOS','ESTADISTICA', 'GEOMETRIA', 'DIBUJO TECNICO', 'SISTEMAS'] #define las asignaturas de Matematicas
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['bloque'] == bloque ]
