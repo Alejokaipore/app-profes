@@ -297,10 +297,10 @@ with col1:
                     notas_bloque = notas_estudiante[notas_estudiante.iloc[:, 6] == bloque]
                     notas_bloque_filtradas = notas_bloque[notas_bloque.iloc[:, 5].isin(asignaturas)]
                     longitud_bloque = len(notas_bloque_filtradas)
-                    if longitud_bloque == 15 and not desempeno_encontrado:
+                    if longitud_bloque == 20 and not desempeno_encontrado:
                         continue 
             
-                    if longitud_bloque < 15 and not desempeno_encontrado:
+                    if longitud_bloque < 20 and not desempeno_encontrado:
                         for materia in asignaturas:
                                 if materia not in notas_bloque_filtradas.iloc[:, 5].values:
                                     df_bloque.iloc[i] = bloque
