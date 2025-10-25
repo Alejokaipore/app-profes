@@ -242,7 +242,7 @@ with col1:
                 
                     
                 bloques = ['A', 'B', 'C', 'D']
-                asignaturas = ['Historia', 'Geografía', 'Participación política']
+                asignaturas = ['HISTORIA', 'GEOGRAFIA', 'PARTICIPACION POLITICA','PENSAMIENTO RELIGIOSO']
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['bloque'] == bloque ]
