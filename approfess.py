@@ -328,7 +328,8 @@ with col1:
                 
                     
                 bloques = ['A', 'B', 'C', 'D']
-                asignaturas = ['Comunicación y sistemas simbólicos', 'Producción e interpretación de textos','Pensamiento religioso']
+                asignaturas = ['COMUNICACION Y SISTEMAS SIMBOLICOS','PRODUCCION E INTERPRETACION DE TEXTOS','PENSAMIENTO RELIGIOSO']
+
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['bloque'] == bloque ]
@@ -413,7 +414,9 @@ with col1:
                 
                     
                 bloques = ['A', 'B', 'C', 'D']
-                asignaturas = ['Biología', 'Química','Física','Medio ambiente']
+                asignaturas = ['BIOLOGIA','QUIMICA','MEDIO AMBIENTE','FISICA']
+
+
 
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['bloque'] == bloque ]
