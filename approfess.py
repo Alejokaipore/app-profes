@@ -504,11 +504,6 @@ with col1:
                     break
         
 
-
-        
-        st.write("Coincidencias con 'LIC-M' y 'OLIMPIADAS':")
-        st.dataframe(planeacion_primaria.isin(['LIC-M', 'OLIMPIADAS']).sum())
-
         if area_seleccionada == 'M':
             adicionar = ['LIC-M','OLIMPIADAS']
             for excepcion in adicionar:
