@@ -247,7 +247,7 @@ with col1:
                 for bloque in bloques:
                     notas_bloque_completo = notas_estudiante[notas_estudiante['bloque'] == bloque ]
                     notas_bloque_sociales = notas_estudiante[ (notas_estudiante['bloque'] == bloque) & (notas_estudiante['asignatura'].isin(asignaturas)) ]
-                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_sociales) == 15):
+                    if (len(notas_bloque_completo) < 80) and (len(notas_bloque_sociales) == 20):
                         desempeno_encontrado = True
                         break
 
