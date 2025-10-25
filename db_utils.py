@@ -68,7 +68,7 @@ def obtener_notas_planetscale():
             LIMIT 100000 OFFSET 70000
         """)
         
-        # Usar la función crear_engine() que ya tienes
+        # Usar la función crear_engine()
         engine = crear_engine()
         with engine.connect() as conn:
             df1 = pd.read_sql(query1, conn)
@@ -85,7 +85,7 @@ def listado_general_planetscale():
     try:
         query = text("SELECT estudiante, grupo, grado, dg, correo, meta FROM estudiantes")
         
-        # Usar la función crear_engine() que ya tienes
+        # Usar la función crear_engine()
         engine = crear_engine()
         with engine.connect() as conn:
             df = pd.read_sql(query, conn)
@@ -93,4 +93,35 @@ def listado_general_planetscale():
         
     except Exception as e:
         st.error(f"Error en listado_general_planetscale: {e}")
+        return pd.DataFrame()
+    
+
+def planeacion_semanal_planetscale(nivel):
+    try:
+        if nivel == 'primaria':
+            listado = ('PRIM',)
+        else:
+            listado = ('T2','SEC','MED')
+
+        query = text("""
+                        SELECT 
+                            e.estudiante,
+                            p.l1, p.m1, p.w1, p.j1, p.v1,
+                            p.l2, p.m2, p.w2, p.j2, p.v2
+                        FROM planeaciones_semanales p
+                        JOIN estudiantes e
+                            ON p.codigo_estudiante = e.codigo
+                        WHERE e.nivel IN :niveles
+                        AND p.semana = 'P4S7'
+                        ORDER BY e.estudiante ASC
+                    """).bindparams(bindparam("niveles", expanding=True))
+        
+        # Usar la función crear_engine()
+        engine = crear_engine()
+        with engine.connect() as conn:
+            df = pd.read_sql(query, conn,params={"niveles": listado})
+        return df
+        
+    except Exception as e:
+        st.error(f"Error en planeacion_semanal_planetscale: {e}")
         return pd.DataFrame()

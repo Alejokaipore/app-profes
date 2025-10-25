@@ -10,37 +10,20 @@ from datetime import datetime
 import pytz
 from sqlalchemy import text
 import mysql.connector
-from db_utils import crear_engine, obtener_notas_planetscale,listado_general_planetscale
+from db_utils import crear_engine, obtener_notas_planetscale,listado_general_planetscale, planeacion_semanal_planetscale
 
-#Esta nota es para verificar llave ssh
+
 
 st.set_page_config(layout="wide")
 
 
 ingles = ['INGLES LISTENING','INGLES READING','INGLES SPEAKING', 'INGLES WRITING']
 
-engine = crear_engine()
-with engine.connect() as conn:
-    # Usar text() para envolver el query SQL
-    result = conn.execute(text("SELECT 1"))
-
-# Enlace de descarga directa 
-url_excel_planeacion = 'https://gkinnova-my.sharepoint.com/:x:/g/personal/manuela_gutierrez_gimnasiokaipore_com/EY4Dg1oyrWBIlzQSB6NVjnEB17gVB5324RNAKs4qMRhdSA?e=IXuEc2&download=1'
-
-
-
 def cargar_listado():
     df = listado_general_planetscale()
     df['grado'] = df['grado'].astype(str)
     df['estudiante'] = df['estudiante'].apply(corregir_nombre)
     df = df[df['grado'].isin(['1','2','3','4','5'])]
-    return df
-
-
-def cargar_planeacion():
-    response = requests.get(url_excel_planeacion)
-    response.raise_for_status()  # Lanza error si hay HTTP 403/404/500
-    df = pd.read_excel(BytesIO(response.content), sheet_name='primaria')
     return df
 
 @st.cache_data
@@ -61,10 +44,14 @@ def cargar_notas_ingles():
     df = df[df['asignatura'].isin(ingles)]
     return df
 
+
+
 notas = cargar_notas()
-planeacion_primaria = cargar_planeacion()
+planeacion_primaria = planeacion_semanal_planetscale('primaria')
+planeacion_primaria.insert(1, 'ingles', 'x') #Se agrega columna ingles despues de estudiante porque el codigo para generar F1's lee por ubicacion de columna
 estudiantes = cargar_listado()
 notas_ingles = cargar_notas_ingles()
+
 
 notas['grado'] = notas['grado'].astype(str)
 notas['estudiante'] = notas['estudiante'].apply(corregir_nombre)
