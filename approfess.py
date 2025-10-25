@@ -52,6 +52,8 @@ planeacion_primaria.insert(1, 'ingles', 'x') #Se agrega columna ingles despues d
 estudiantes = cargar_listado()
 notas_ingles = cargar_notas_ingles()
 
+st.dataframe(planeacion_primaria.head()) 
+
 
 notas['grado'] = notas['grado'].astype(str)
 notas['estudiante'] = notas['estudiante'].apply(corregir_nombre)
@@ -503,6 +505,8 @@ with col1:
                             for col in range(5, b + 1):
                                 df_horario.iloc[k, col] = np.nan
                     break
+        
+ 
 
         if area_seleccionada == 'M':
             adicionar = ['LIC-M','OLIMPIADAS']
