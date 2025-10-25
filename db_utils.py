@@ -1,7 +1,7 @@
 # db_utils.py
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine, text  # Agregar text aquí
+from sqlalchemy import create_engine, text, bindparam  # Agregar text aquí
 
 def crear_engine():
     # Obtener los secretos dentro de la función
