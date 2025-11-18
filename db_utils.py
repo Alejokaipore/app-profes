@@ -112,7 +112,7 @@ def planeacion_semanal_planetscale(nivel):
                         JOIN estudiantes e
                             ON p.codigo_estudiante = e.codigo
                         WHERE e.nivel IN :niveles
-                        AND p.semana = 'P4S9'
+                        AND p.semana = 'P4S10'
                         ORDER BY e.estudiante ASC
                     """).bindparams(bindparam("niveles", expanding=True))
         
